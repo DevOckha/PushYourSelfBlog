@@ -1,0 +1,10 @@
+{% extends 'blog/base.html' %}
+{% block title %}Post{% endblock title %}
+
+{% block content %}
+    <div>
+        <h3> {{post.title|title}}-{{post.published_date|date}} </h3>
+        <p> {{post.content}} </p>
+        <p><a href="{% url 'posts:home'  %}">Go back home </a></p>
+    </div>
+{% endblock content %}

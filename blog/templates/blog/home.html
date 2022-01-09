@@ -1,0 +1,31 @@
+{% extends 'blog/base.html' %}
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+    <h1>Posts</h1><small><a href="{% url 'posts:post_create'  %}">Add New Post </a></small>
+    <ul>
+        {% for post in posts  %}
+            <li> {{post.published_date|date}} - <a href=" {{ post.get_absolute_url }} ">{{post.title|title}}</a></li>
+            <small><a href="{% url 'posts:post_update' post.slug %}">Edit</a></small>|<small><a href="{% url 'posts:post_delete' post.slug %}">Delete</a></small>
+            <li>No posts yet.</li>
+        {% endfor %}
+    </ul>
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+    
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+    
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+{% endblock content %}
+
