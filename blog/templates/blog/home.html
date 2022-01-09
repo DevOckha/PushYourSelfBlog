@@ -5,7 +5,7 @@
 <h2>Posts</h2>
     <ul>
         {% for post in posts  %}
-            <li> {{post.published_date|date}} - <a href=" {{ post.get_absolute_url }} ">{{post.title|title}}</a></li>
+            <li>  <a href=" {{ post.get_absolute_url }} ">{{post.title|title}}</a> {{post.published_date|date}}</li>
             {% if request.user.is_authenticated %}
             <small><a href="{% url 'posts:post_update' post.slug %}">Edit</a></small>|<small><a href="{% url 'posts:post_delete' post.slug %}">Delete</a></small>
             <small><a href="{% url 'posts:post_create'  %}">Add New Post </a></small>

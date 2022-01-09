@@ -29,10 +29,7 @@ class PostUpdateView(UpdateView):
     model = Post
     template_name = 'blog/post_update.html'
     fields = ['title', 'content']
-    def get_context_data(self, **kwargs):
-        context = super(PostUpdateView, self).get_context_data(**kwargs)
-        context['slug'] = self.object.slug
-        return context
+
 
 
 
