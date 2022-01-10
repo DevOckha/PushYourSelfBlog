@@ -1,6 +1,6 @@
 from unicodedata import name
 from django.urls import path
-from .views import PostListView, PostDetailView, PostCreateView, PostUpdateView, PostDeleteView
+from .views import PostListView, PostDetailView, PostCreateView, PostUpdateView, PostDeleteView, PostSearchView
 
 app_name = 'posts'
 urlpatterns = [
@@ -9,5 +9,5 @@ urlpatterns = [
     path('post/create/', PostCreateView.as_view(), name='post_create'),
     path('post/update/<slug:slug>', PostUpdateView.as_view(), name='post_update'),
     path('post/delete/<slug:slug>', PostDeleteView.as_view(), name='post_delete'),   
-
+    path('post/', PostSearchView.as_view(), name='search_posts'),
 ]

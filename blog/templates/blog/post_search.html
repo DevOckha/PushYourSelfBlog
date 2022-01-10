@@ -1,0 +1,11 @@
+{% extends 'blog/base.html' %}
+{% block title %}Post Search{% endblock title %}
+{% block content %}
+    <h1>Search Results</h1>
+    {% for post in object_list %}
+        <div>
+            <h3><a href="{% url 'posts:post_detail' post.slug  %}">{{post.title|title}}</a></h3>
+            <p>{{post.content}}</p>
+        </div>
+    {% endfor %}
+{% endblock content %}

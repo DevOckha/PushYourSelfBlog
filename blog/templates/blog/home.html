@@ -3,16 +3,22 @@
 
 {% block content %}
 <h2>Posts</h2>
-    <ul>
-        {% for post in posts  %}
-            <li>  <a href=" {{ post.get_absolute_url }} ">{{post.title|title}}</a> {{post.published_date|date}}</li>
+    <form class="form-inline my-2 my-lg-0" method="get" action="{% url 'posts:search_posts' %}">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search" >
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+    {% if request.user.is_authenticated %}
+        <h4><a href="{% url 'posts:post_create' %}">Add Post</a></h4>
+    {% endif %}
+    
+    {% for post in posts  %}
+        <div>
+            <h3><a href="{{ post.get_absolute_url }}">{{post.title|title}}</a> {{post.published_date|date}}</h3>
             {% if request.user.is_authenticated %}
-            <small><a href="{% url 'posts:post_update' post.slug %}">Edit</a></small>|<small><a href="{% url 'posts:post_delete' post.slug %}">Delete</a></small>
-            <small><a href="{% url 'posts:post_create'  %}">Add New Post </a></small>
-            <li>No posts yet.</li>
+                <small><a href="{% url 'posts:post_update' post.slug %}">Edit</a></small>|<small><a href="{% url 'posts:post_delete' post.slug %}">Delete</a></small>
             {% endif %}
-        {% endfor %}
-    </ul>
+        </div>
+    {% endfor %}
     <div class="pagination">
         <span class="step-links">
             {% if page_obj.has_previous %}
