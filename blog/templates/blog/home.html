@@ -10,10 +10,10 @@
     {% if request.user.is_authenticated %}
         <h4><a href="{% url 'posts:post_create' %}">Add Post</a></h4>
     {% endif %}
-    
+
     {% for post in posts  %}
         <div>
-            <h3><a href="{{ post.get_absolute_url }}">{{post.title|title}}</a> {{post.published_date|date}}</h3>
+            <h3><a href="{{ post.get_absolute_url }}">{{post.title|title}}</a> {{post.published_date|date}}</h3> <br>
             {% if request.user.is_authenticated %}
                 <small><a href="{% url 'posts:post_update' post.slug %}">Edit</a></small>|<small><a href="{% url 'posts:post_delete' post.slug %}">Delete</a></small>
             {% endif %}

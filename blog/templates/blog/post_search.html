@@ -2,10 +2,17 @@
 {% block title %}Post Search{% endblock title %}
 {% block content %}
     <h1>Search Results</h1>
-    {% for post in object_list %}
-        <div>
-            <h3><a href="{% url 'posts:post_detail' post.slug  %}">{{post.title|title}}</a></h3>
-            <p>{{post.content}}</p>
-        </div>
-    {% endfor %}
+    {% if object_list %}
+        {% for post in object_list %}
+            <div>
+                <h3><a href="{% url 'posts:post_detail' post.slug  %}">{{post.title|title}}</a></h3>
+                <p>{{post.content}}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+            <p>not found search</p>
+            <p><a href="{% url 'posts:home'  %}">Go back home </a></p>
+    {% endif %}
+
+
 {% endblock content %}
