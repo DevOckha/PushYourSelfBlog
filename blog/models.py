@@ -2,13 +2,12 @@ from genericpath import exists
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse 
-from django.db.models.signals import pre_save
 from django.utils.text import slugify
-
+from ckeditor.fields import RichTextField
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
-    content = models.TextField()
+    content = RichTextField()
     slug = models.SlugField(unique=True, max_length=255)
     published_date = models.DateTimeField(auto_now_add=True) 
     

@@ -2,11 +2,24 @@
 {% block title %}Post Create{% endblock title %}
 {% load crispy_forms_tags %}
 {% block content %}
-    
-    <div>
-        <form action="" method="post" enctype="multipart/form-data">
+    <div class="container justify-content-center"> 
+        <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            {{form|crispy}}
+            <div class="form-row">
+                <div class="form-group">
+                    {{ form.user|as_crispy_field }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    {{ form.title|as_crispy_field }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    {{ form.content|as_crispy_field }}
+                </div>
+            </div>
             <input type="submit" value="Save">
         </form>
     </div>

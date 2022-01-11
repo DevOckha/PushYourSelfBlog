@@ -2,12 +2,15 @@
 {% block title %}Post Update{% endblock title %}
 {% load crispy_forms_tags %}
 {% block content %}
-    <div>
-        <form  method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{form|crispy}}
-            <input type="submit" value="Delete">
-        </form>
-        <p><a href="{% url 'posts:home'  %}">Go back home </a></p>
-    </div>
+<div>
+    <form  method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form|crispy}}
+        <input type="submit" value="Delete">
+    </form>
+    <p><a href="{% url 'posts:home'  %}">Go back home </a></p>
+</div>
 {% endblock content %}
+
+
+

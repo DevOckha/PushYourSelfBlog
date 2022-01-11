@@ -4,9 +4,20 @@
     <h1>Search Results</h1>
     {% if object_list %}
         {% for post in object_list %}
-            <div>
-                <h3><a href="{% url 'posts:post_detail' post.slug  %}">{{post.title|title}}</a></h3>
-                <p>{{post.content}}</p>
+            <div class="container mt-4">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title"><a href="{% url 'posts:post_detail' post.slug  %}">{{post.title}}</a></h5>
+                        <p class="card-text">{{post.content|safe|truncatewords:15}}</p>
+                        {% if request.user.is_authenticated %}
+                        <a href="{% url 'posts:post_delete' post.slug  %}" class="btn btn-danger">Delete</a>
+                        <a href="{% url 'posts:post_update' post.slug  %}" class="btn btn-primary">Edit</a>
+                        {% endif %}
+                    </div>
+                    <div class="card-footer text-muted">
+                        {{post.published_date|date}}
+                    </div>
+                </div>
             </div>
         {% endfor %}
     {% else %}
@@ -16,3 +27,9 @@
 
 
 {% endblock content %}
+
+
+<div>
+    <h3><a href="{% url 'posts:post_detail' post.slug  %}">{{post.title|title}}</a></h3>
+    <p>{{post.content}}</p>
+</div>

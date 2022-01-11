@@ -5,3 +5,4 @@ from .models import Post
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("title",)}
+    search_fields = ('title', 'content')

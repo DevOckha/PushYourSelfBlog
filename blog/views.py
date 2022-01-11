@@ -3,7 +3,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.urls import reverse_lazy
 from .models import Post
 from django.db.models import Q
-
+from .forms import PostCreateForm
 
 class AboutPageView(TemplateView):
     template_name = 'blog/about.html'
@@ -14,7 +14,7 @@ class PostListView(ListView):
     template_name = 'blog/home.html'
     context_object_name = 'posts'
     ordering = ['-published_date']
-    paginate_by = 5
+    paginate_by = 3
 
 
 class PostDetailView(DetailView):
@@ -24,9 +24,10 @@ class PostDetailView(DetailView):
 
 class PostCreateView(CreateView):
     model = Post
+    form_class = PostCreateForm
     template_name = 'blog/post_create.html'
     success_url = reverse_lazy('posts:home')
-    fields = ['user','title', 'content']
+    # fields = ['user','title', 'content']
 
 
 
