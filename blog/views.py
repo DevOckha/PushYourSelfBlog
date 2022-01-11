@@ -1,8 +1,13 @@
 from django.shortcuts import redirect
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 from django.urls import reverse_lazy
 from .models import Post
 from django.db.models import Q
+
+
+class AboutPageView(TemplateView):
+    template_name = 'blog/about.html'
+
 
 class PostListView(ListView):
     model = Post
@@ -44,7 +49,7 @@ class PostSearchView(ListView):
     template_name = 'blog/post_search.html'
 
     def get_queryset(self):
-        result = super(PostSearchView, self).get_queryset()
+        super().get_queryset()
         query = self.request.GET.get('search')
         if query:
             object_list = Post.objects.filter(Q(title__icontains=query) | Q(content__icontains=query))

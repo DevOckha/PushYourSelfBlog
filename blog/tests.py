@@ -7,7 +7,7 @@ from .views import PostListView
 
 
 
-class TestsPostListView(TestCase):
+class TestsView(TestCase):
    
 
     def setUp(self):
@@ -17,7 +17,19 @@ class TestsPostListView(TestCase):
         url = reverse('posts:home')
         self.response = self.client.get(url)
 
-    
+    def test_about_page_view(self):
+        url = reverse('posts:about')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'About Page')
+        self.assertNotContains(response, 'not in about page')
+        self.assertTemplateUsed(response, 'blog/about.html')
+
+    def test_detail_view(self):
+        response = self.client.get(reverse('posts:post_detail', kwargs={'slug':self.post.slug}))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'blog/post_detail.html')
+
     def test_post_list_view(self):
         self.assertEqual(self.response.status_code, 200)
         self.assertTemplateUsed(self.response, 'blog/home.html')
@@ -26,11 +38,10 @@ class TestsPostListView(TestCase):
 
     def test_post_list_is_resolved(self):
         url = reverse('posts:home')
-        print(resolve(url))
         self.assertEqual(resolve(url).func.view_class, PostListView)
 
 
-class PostTest(TestCase):
+class TestPostModel(TestCase):
 
     def setUp(self):
         self.user = User.objects.create(username='testuser123', password='testpass123')
@@ -39,6 +50,10 @@ class PostTest(TestCase):
     def tearDown(self):
         self.user.delete()
     
+    def test_str_is_equal_to_title(self):
+        post = self.post
+        self.assertEqual(str(post), self.post.title)
+
     def test_read_post(self):
         self.assertEqual(self.post.user, self.user)
         self.assertEqual(self.post.content, 'test content')
@@ -54,3 +69,9 @@ class PostTest(TestCase):
         self.post.save()
         self.assertEqual(self.post.title, 'new title')
         self.assertEqual(self.post.slug, 'new-title')
+    
+    def test_create_post(self):
+        response = self.client.get(reverse('posts:post_detail', kwargs={'slug':self.post.slug}))
+        self.assertEqual(self.post.title, 'Test Title')
+        self.assertContains(response, 'test content')
+        self.assertEqual(response.status_code, 200)
