@@ -3,11 +3,12 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse 
 from django.utils.text import slugify
-from ckeditor.fields import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
-    content = RichTextField()
+    content = RichTextUploadingField(blank=True, null=True)
+    thumbnail = models.ImageField(upload_to ='uploads/', blank=True, null=True)
     slug = models.SlugField(unique=True, max_length=255)
     published_date = models.DateTimeField(auto_now_add=True) 
     

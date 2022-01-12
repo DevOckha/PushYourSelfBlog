@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from .models import Post
 from django.db.models import Q
 from .forms import PostCreateForm
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 class AboutPageView(TemplateView):
     template_name = 'blog/about.html'
 
@@ -14,7 +14,7 @@ class PostListView(ListView):
     template_name = 'blog/home.html'
     context_object_name = 'posts'
     ordering = ['-published_date']
-    paginate_by = 3
+    paginate_by = 5
 
 
 class PostDetailView(DetailView):
@@ -22,7 +22,7 @@ class PostDetailView(DetailView):
     template_name = 'blog/post_detail.html'
 
 
-class PostCreateView(CreateView):
+class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     form_class = PostCreateForm
     template_name = 'blog/post_create.html'
@@ -31,15 +31,15 @@ class PostCreateView(CreateView):
 
 
 
-class PostUpdateView(UpdateView):
+class PostUpdateView(LoginRequiredMixin, UpdateView):
     model = Post
     template_name = 'blog/post_update.html'
     fields = ['title', 'content']
+    success_url = reverse_lazy('posts:home')
 
 
 
-
-class PostDeleteView(DeleteView):
+class PostDeleteView(LoginRequiredMixin ,DeleteView):
     model = Post
     template_name = 'blog/post_delete.html'
     success_url = reverse_lazy('posts:home')

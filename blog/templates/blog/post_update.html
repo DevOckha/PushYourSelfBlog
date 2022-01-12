@@ -6,6 +6,7 @@
     <div class="container">
         <form action="" method="post" enctype="multipart/form-data">
             {% csrf_token %}
+            {{form.media}}
             {{ form|crispy|safe }}
             <input type="submit" value="Edit">
         </form>
